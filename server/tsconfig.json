@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "target": "es6",
+        "module": "commonjs",
         "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
         "skipLibCheck": true,
         "sourceMap": true,
@@ -25,4 +26,3 @@
     "exclude": ["node_modules"],
     "include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }
-
