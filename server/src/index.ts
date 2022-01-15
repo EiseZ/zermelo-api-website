@@ -20,7 +20,7 @@ const firebaseConfig = {
 
 async function main() {
     // Make connection to firestore
-    const _firebase = initializeApp(firebaseConfig);
+    initializeApp(firebaseConfig);
     const db = getFirestore();
 
     const app = express(); // Create express server
