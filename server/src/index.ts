@@ -1,20 +1,38 @@
 import "reflect-metadata";
 import express from "express";
+import cors from "cors";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import "firebase/firestore";
 
 import { UserResolver } from "./resolvers/user";
 
+const firebaseConfig = {
+    apiKey: "AIzaSyCbKvEkU9DI_Pwb-F0GGHpnMSFRfg8icxQ",
+    authDomain: "zermelo-api-website.firebaseapp.com",
+    projectId: "zermelo-api-website",
+    storageBucket: "zermelo-api-website.appspot.com",
+    messagingSenderId: "599142929731",
+    appId: "1:599142929731:web:9f5b337da95ee78486cbf6",
+};
+
 async function main() {
+    // Make connection to firestore
+    const _firebase = initializeApp(firebaseConfig);
+    const db = getFirestore();
+
     const app = express(); // Create express server
+    app.use(cors()); // Allow cors requests
 
     const apollo = new ApolloServer({
-        // Create apollo server with type-graphql schema (currently does nothing because it doesnt have a database to connect to)
+        // Create apollo server with type-graphql schema
         schema: await buildSchema({
             resolvers: [UserResolver],
-            validate: false,
         }),
         context: ({ req, res }) => ({
+            db: db,
             req,
             res,
         }),
